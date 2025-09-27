@@ -1,5 +1,4 @@
 # Import necessary libraries and modules
-
 import streamlit as st
 from langchain.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -11,6 +10,10 @@ from langchain.memory import ConversationBufferMemory
 from langchain.prompts import PromptTemplate
 import tempfile
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # --- Load and Process PDFs ---
 def load_documents(uploaded_files):
@@ -59,7 +62,13 @@ def main():
         text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
         docs = text_splitter.split_documents(documents)
 
-        embeddings = OpenAIEmbeddings()
+        # Initialize OpenAI components with API key from environment
+        openai_api_key = os.getenv("OPENAI_API_KEY")
+        if not openai_api_key:
+            st.error("⚠️ OpenAI API key not found! Please set OPENAI_API_KEY in your .env file")
+            st.stop()
+        
+        embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
         
         if storage_option == "Save to disk (persistent)":
             # Create a directory for storing vector database
@@ -90,21 +99,26 @@ def main():
 
         memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
 
-        # ✅ System message integration
-        system_message = """
+        # ✅ Fixed prompt template with proper variables for ConversationalRetrievalChain
+        custom_prompt = PromptTemplate(
+            input_variables=["context", "question"],
+            template="""
                 You are Gen AI, a helpful assistant that answers questions based on the uploaded PDF documents.
-                Answer the question using only the information from the documents.
+                Use the following pieces of context to answer the question at the end.
                 If the answer is not in the documents, respond with "I don't know".
                 Be concise and to the point.
-                """
 
-        custom_prompt = PromptTemplate.from_template("""{system_message}Question: {question}""")
+                Context: {context}
+                Question: {question}
+
+                Answer:"""
+        )
 
         qa_chain = ConversationalRetrievalChain.from_llm(
-            llm=ChatOpenAI(),
+            llm=ChatOpenAI(openai_api_key=openai_api_key, model_name=os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")),
             retriever=db.as_retriever(),
             memory=memory,
-            combine_docs_chain_kwargs={"prompt": custom_prompt.partial(system_message=system_message)}
+            combine_docs_chain_kwargs={"prompt": custom_prompt}
         )
 
         st.subheader("Ask a question about your PDFs")

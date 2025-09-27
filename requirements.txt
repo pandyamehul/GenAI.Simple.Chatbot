@@ -1,0 +1,18 @@
+# Web Framework
+streamlit
+
+# LangChain and AI/ML Libraries
+langchain
+openai
+faiss-cpu
+tiktoken
+
+# PDF Processing
+pypdf
+
+# Environment Variables
+python-dotenv
+
+# Additional utilities (if needed)
+numpy
+pandas
