@@ -16,26 +16,28 @@ The GenAI PDF Chatbot has been completely refactored from a monolithic structure
 
 ```pwsh
 GenAI.Chatbot.FromPDF/
-├── 📄 Application Entry Points
+├── � Modular_App/                 # 🧩 Modular Application Code
 │   ├── app.py                      # Main application launcher
 │   ├── main.py                     # Core application orchestration
-│   └── GenAI.Chatbot.AnsFromPDF.py # Legacy entry point (compatibility)
-│
-├── ⚙️ Configuration & Settings
-│   └── config.py                   # Centralized configuration management
+│   ├── config.py                   # Centralized configuration management
 │
 ├── 🧩 Core Modules
 │   ├── auth.py                     # Authentication & authorization
 │   ├── document_processor.py       # PDF processing & text extraction
 │   ├── vector_store.py             # Vector database abstraction layer
 │   ├── chat_engine.py              # Conversational AI & memory management
-│   └── ui_components.py            # Streamlit UI components
+│   ├── ui_components.py            # Streamlit UI components
+│   └── GenAI.Chatbot.AnsFromPDF.v2.py  # Legacy v2 compatibility
 │
-├── 📚 Documentation
-│   ├── README.md                   # User guide & setup instructions
+├── 📂 Docs/                        # 📚 Documentation
 │   ├── ARCHITECTURE.md             # This file - architecture documentation
+│   ├── FEATURES.md                 # Feature documentation & comparisons
 │   ├── MIGRATION.md                # Migration guide from v1.0 to v2.0
-│   └── FEATURES.md                 # Feature documentation
+│   ├── TROUBLESHOOTING.md          # Troubleshooting guide
+│   └── CHANGELOG.md                # Version history & changes
+│
+├── GenAI.Chatbot.AnsFromPDF.v1.py # 🔄 Original v1.0 application
+├── README.md                       # User guide & setup instructions
 │
 ├── 📦 Dependencies & Configuration
 │   ├── requirements.txt            # Python dependencies (updated with ChromaDB)
@@ -212,10 +214,10 @@ graph TD
 
 ```bash
 # Using the new modular version
-streamlit run app.py
+streamlit run Modular_App/app.py
 
 # Or directly with main
-streamlit run main.py
+streamlit run Modular_App/main.py
 ```
 
 ### **Production Deployment**
@@ -228,7 +230,7 @@ pip install -r requirements.txt
 export OPENAI_API_KEY="your-key-here"
 
 # Run application
-streamlit run app.py --server.port 8501
+streamlit run Modular_App/app.py --server.port 8501
 ```
 
 ## 🛠️ Extending the Application

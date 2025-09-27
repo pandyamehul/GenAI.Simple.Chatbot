@@ -50,19 +50,19 @@ You have multiple options to run the application:
 #### Option A: New Modular Application (Recommended)
 
 ```bash
-streamlit run app.py
+streamlit run Modular_App/app.py
 ```
 
 #### Option B: Main Module Directly
 
 ```bash
-streamlit run main.py
+streamlit run Modular_App/main.py
 ```
 
 #### Option C: Legacy Entry Point (Compatibility)
 
 ```bash
-streamlit run GenAI.Chatbot.AnsFromPDF.py
+streamlit run GenAI.Chatbot.AnsFromPDF.v1.py
 ```
 
 ### Step 4: Verify Migration
@@ -89,10 +89,10 @@ OPENAI_EMBEDDING_MODEL=text-embedding-ada-002
 
 ### New Configuration Options
 
-The new modular system introduces centralized configuration in `config.py`. You can customize:
+The new modular system introduces centralized configuration in `Modular_App/config.py`. You can customize:
 
 ```python
-# In config.py, you can modify:
+# In Modular_App/config.py, you can modify:
 CHUNK_SIZE = 1000              # Text chunk size
 CHUNK_OVERLAP = 200            # Chunk overlap
 MAX_FILE_SIZE_MB = 100         # Maximum PDF size
@@ -260,4 +260,4 @@ If you encounter any issues during migration:
 3. **Backup and Retry**: Use your backups to start fresh if needed
 4. **Environment Issues**: Verify Python version and dependencies
 
-**Remember**: You can always run the legacy entry point (`GenAI.Chatbot.AnsFromPDF.py`) if you need the original functionality while troubleshooting.
+**Remember**: You can always run the legacy entry point (`GenAI.Chatbot.AnsFromPDF.v1.py`) if you need the original functionality while troubleshooting.

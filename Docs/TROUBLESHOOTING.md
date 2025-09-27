@@ -77,9 +77,10 @@ pip install -r requirements.txt --upgrade
 
     ```pwsh
     GenAI.Chatbot.FromPDF/
-    ├── .env                 # Must be here
-    ├── app.py
-    └── main.py
+    ├── .env                 # Must be here (project root)
+    └── Modular_App/
+        ├── app.py
+        └── main.py
     ```
 
 4. **Environment Variable Alternative**:
@@ -163,7 +164,7 @@ pip install -r requirements.txt --upgrade
 
    ```bash
    # Try different port if 8501 is busy
-   streamlit run app.py --server.port 8502
+   streamlit run Modular_App/app.py --server.port 8502
    ```
 
 ### Memory Issues
@@ -173,7 +174,7 @@ pip install -r requirements.txt --upgrade
 **Solutions**:
 
 1. **Reduce Chunk Size**:
-   - Edit `config.py`
+   - Edit `Modular_App/config.py`
    - Reduce `CHUNK_SIZE` from 1000 to 500 or 250
 
 2. **Process Fewer Documents**:
@@ -210,7 +211,7 @@ pip install -r requirements.txt --upgrade
    ```bash
    # Run from project root directory
    cd GenAI.Chatbot.FromPDF
-   streamlit run app.py
+   streamlit run Modular_App/app.py
    ```
 
 ### Configuration Errors
@@ -219,7 +220,7 @@ pip install -r requirements.txt --upgrade
 
 **Solutions**:
 
-1. **Check config.py**: Ensure all required settings are present
+1. **Check Modular_App/config.py**: Ensure all required settings are present
 2. **Validate Environment**: Check all environment variables are set
 3. **Reset Configuration**: Delete any cached configuration and restart
 
@@ -230,7 +231,7 @@ pip install -r requirements.txt --upgrade
 1. **Streamlit Debug Mode**:
 
    ```bash
-   streamlit run app.py --logger.level debug
+   streamlit run Modular_App/app.py --logger.level debug
    ```
 
 2. **Check Browser Console**: Look for JavaScript errors in browser developer tools

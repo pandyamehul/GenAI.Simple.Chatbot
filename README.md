@@ -130,19 +130,19 @@ OPENAI_EMBEDDING_MODEL=text-embedding-ada-002
 #### Option A: New Modular Application (Recommended)
 
 ```bash
-streamlit run app.py
+streamlit run Modular_App/app.py
 ```
 
 #### Option B: Direct Main Module
 
 ```bash
-streamlit run main.py
+streamlit run Modular_App/main.py
 ```
 
 #### Option C: Legacy Entry Point (Compatibility)
 
 ```bash
-streamlit run GenAI.Chatbot.AnsFromPDF.py
+streamlit run GenAI.Chatbot.AnsFromPDF.v1.py
 ```
 
 The application will open in your default web browser at `http://localhost:8501`
@@ -222,17 +222,32 @@ pip install chromadb --upgrade
 
 ## 📁 Project Structure
 
-```txt
+```pwsh
 GenAI.Chatbot.FromPDF/
-├── GenAI.Chatbot.AnsFromPDF.py    # Main application file
+├── Modular_App/                    # 🧩 Modular Application Code
+│   ├── app.py                      # Main application entry point
+│   ├── main.py                     # Application orchestration
+│   ├── config.py                   # Configuration management
+│   ├── auth.py                     # Authentication system
+│   ├── document_processor.py       # PDF processing logic
+│   ├── vector_store.py             # Vector database abstraction
+│   ├── chat_engine.py              # Chat and conversation management
+│   ├── ui_components.py            # Streamlit UI components
+│   └── GenAI.Chatbot.AnsFromPDF.v2.py  # Legacy v2 compatibility
+├── Docs/                           # 📚 Documentation
+│   ├── ARCHITECTURE.md             # System architecture details
+│   ├── FEATURES.md                 # Feature documentation
+│   ├── MIGRATION.md                # Migration guide v1→v2
+│   ├── TROUBLESHOOTING.md          # Troubleshooting guide
+│   └── CHANGELOG.md                # Version history
+├── GenAI.Chatbot.AnsFromPDF.v1.py # 🔄 Original v1.0 application
 ├── requirements.txt                # Python dependencies
-├── .env                           # Environment variables (create this)
-├── .gitignore                     # Git ignore rules
-├── README.md                      # This file
-├── venv/                          # Virtual environment (auto-created)
-└── vector_db/                     # Vector database storage (auto-created)
-    ├── index.faiss               # FAISS index file
-    └── index.pkl                 # Metadata pickle file
+├── .env                            # Environment variables (create this)
+├── .gitignore                      # Git ignore rules
+├── README.md                       # This file
+├── venv/                           # Virtual environment (auto-created)
+├── vector_db/                      # FAISS database storage (auto-created)
+└── chroma_db/                      # ChromaDB storage (auto-created)
 ```
 
 ## 🔧 Configuration Options
@@ -331,7 +346,7 @@ pip install -r requirements.txt
 
 ### Core Libraries
 
-```txt
+```pwsh
 streamlit==1.28.0          # Web framework
 langchain==0.0.335         # AI framework
 openai==0.28.1             # OpenAI API client
@@ -362,11 +377,11 @@ pandas==2.0.3              # Data manipulation
 
 ## 📚 Additional Documentation
 
-- **[Architecture Guide](ARCHITECTURE.md)**: Detailed system architecture and module descriptions
-- **[Features Documentation](FEATURES.md)**: Comprehensive feature overview and comparisons  
-- **[Migration Guide](MIGRATION.md)**: Upgrade instructions from v1.0 to v2.0
-- **[Troubleshooting Guide](TROUBLESHOOTING.md)**: Common issues and solutions
-- **[Changelog](CHANGELOG.md)**: Version history and release notes
+- **[Architecture Guide](/Docs/ARCHITECTURE.md)**: Detailed system architecture and module descriptions
+- **[Features Documentation](/Docs/FEATURES.md)**: Comprehensive feature overview and comparisons
+- **[Migration Guide](/Docs/MIGRATION.md)**: Upgrade instructions from v1.0 to v2.0
+- **[Troubleshooting Guide](/Docs/TROUBLESHOOTING.md)**: Common issues and solutions
+- **[Change Log](/Docs/CHANGELOG.md)**: Version history and release notes
 
 ## 🤝 Contributing
 

@@ -225,7 +225,6 @@ class ConversationManager:
         
         return exported_text
 
-
 # Global instances
 chat_engine = ChatEngine()
 conversation_manager = ConversationManager()

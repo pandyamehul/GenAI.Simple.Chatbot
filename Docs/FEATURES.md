@@ -173,7 +173,7 @@ The GenAI PDF Chatbot has been completely reimagined with a modular architecture
 
 ```pwsh
 # Run the application
-streamlit run app.py
+streamlit run Modular_App/app.py
 
 # In the sidebar, select:
 # - FAISS: For speed and simplicity
@@ -228,4 +228,4 @@ The new version maintains **100% backward compatibility** while adding powerful 
 
 ---
 
-**Ready to explore?** Run `streamlit run app.py` and experience the enhanced GenAI PDF Chatbot!
+**Ready to explore?** Run `streamlit run Modular_App/app.py` and experience the enhanced GenAI PDF Chatbot!
