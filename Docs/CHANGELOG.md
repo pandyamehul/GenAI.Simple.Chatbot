@@ -9,25 +9,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🗂️ Project Organization & Documentation Update
 
-#### Added
+#### Added [2.1.0]
 
 - **Organized Folder Structure**: Implemented professional project organization
 - **Comprehensive Documentation**: Created complete documentation suite in dedicated folder
 - **Enhanced Troubleshooting**: Added detailed troubleshooting guide with compatibility fixes
 
-#### Changed
+#### Changed [2.1.0]
 
-- **File Organization**: 
+- **File Organization**:
+
   - **`Modular_App/`**: All application code moved to dedicated folder
   - **`Docs/`**: All documentation consolidated in professional documentation folder
   - **Root Directory**: Cleaned up with only essential files (README.md, requirements.txt, .env)
 
 - **Updated Entry Points**:
+  
   - **New Modular App**: `streamlit run Modular_App/app.py` (recommended)
   - **Direct Main**: `streamlit run Modular_App/main.py`
   - **Legacy v1.0**: `streamlit run GenAI.Chatbot.AnsFromPDF.v1.py`
 
 - **Documentation Structure**:
+  
   - **`Docs/ARCHITECTURE.md`**: System architecture and technical details
   - **`Docs/FEATURES.md`**: Comprehensive feature documentation
   - **`Docs/MIGRATION.md`**: Migration guide from v1.0 to v2.0
@@ -37,7 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Path References**: Updated all documentation to reflect new folder structure
 - **Professional Structure**: Enhanced project maintainability and navigation
 
-#### Fixed
+#### Fixed [2.1.0]
 
 - **Documentation Consistency**: All file paths and commands now correctly reference new structure
 - **User Experience**: Clear guidance for running application from new structure
@@ -66,7 +69,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 This is a complete architectural overhaul of the GenAI PDF Chatbot, transforming it from a monolithic application into a production-ready, modular system.
 
-### ✨ Added
+### ✨ Added [2.0.0]
 
 #### Core Features
 
@@ -103,7 +106,7 @@ This is a complete architectural overhaul of the GenAI PDF Chatbot, transforming
 - **Logging**: Structured logging for debugging and monitoring
 - **Testing Structure**: Organized codebase for easy unit and integration testing
 
-### 🔄 Changed
+### 🔄 Changed [2.0.0]
 
 #### User Interface
 
@@ -126,7 +129,7 @@ This is a complete architectural overhaul of the GenAI PDF Chatbot, transforming
 - **Flexible Options**: Easy customization of chunk sizes, models, and limits
 - **Validation**: Startup validation of all required components
 
-### 🚀 Enhanced
+### 🚀 Enhanced [2.0.0]
 
 #### Database Management
 

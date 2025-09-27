@@ -58,4 +58,5 @@ Thumbs.db
 logs/
 *vector_db/*
 *chroma_db/*
+*chroma_db*
 *.sqlite3
