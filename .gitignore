@@ -56,3 +56,6 @@ Thumbs.db
 # Logs
 *.log
 logs/
+*vector_db/*
+*chroma_db/*
+*.sqlite3

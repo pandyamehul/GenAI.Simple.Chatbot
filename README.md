@@ -1,20 +1,48 @@
-# 📚 GenAI Chatbot - Answer From Uploaded PDF File
+# 📚 GenAI PDF Chatbot v2.0 - Modular Architecture with ChromaDB Support
 
-A sophisticated **Retrieval-Augmented Generation (RAG)** chatbot built with **Streamlit** and **LangChain** that allows users to interact with PDF documents through natural language queries.
+A **production-ready**, **modular** Retrieval-Augmented Generation (RAG) chatbot built with **Streamlit** and **LangChain**. Now featuring **dual vector database support** (FAISS + ChromaDB) and a completely refactored, maintainable architecture.
 
-## 🎯 Overview
+## 🎯 What's New in v2.0
 
-This application enables users to upload PDF documents and ask questions about their content using OpenAI's GPT models. The system extracts text from PDFs, creates vector embeddings, and uses semantic search to provide accurate, context-aware responses.
+🔥 **Major Update**: Complete architectural overhaul with modular design and ChromaDB support!
 
-## ✨ Key Features
+### 🚀 New Features
 
-- 📄 **Multiple PDF Upload**: Upload and process multiple PDF files simultaneously
-- 🧠 **Intelligent Q&A**: Ask natural language questions about document content
-- 💾 **Persistent Storage**: Choose between memory-only or disk-based vector storage
-- 🔒 **Secure Authentication**: Basic login system to protect access
-- 🎯 **Grounded Responses**: AI only answers based on uploaded document content
-- 💬 **Conversational Memory**: Maintains chat history for contextual conversations
-- ⚡ **Fast Retrieval**: Uses FAISS vector database for efficient similarity search
+- **🔄 Dual Database Support**: Toggle between FAISS and ChromaDB vector databases
+- **🧩 Modular Architecture**: Clean, maintainable code structure with separated concerns
+- **💬 Enhanced Chat Interface**: Professional chat UI with conversation history and export
+- **⚙️ Advanced Configuration**: Centralized settings management and validation
+- **📊 Real-time Statistics**: Monitor processing stats and database information
+- **🛠️ Developer-Friendly**: Full type annotations, comprehensive documentation
+
+### ⚡ Performance Improvements
+
+- **Faster Loading**: Optimized module loading and caching
+- **Better Memory Management**: Efficient resource handling
+- **Smart Error Recovery**: Comprehensive error handling with user-friendly messages
+
+## ✨ Core Features
+
+### Document Management
+
+- 📄 **Multiple PDF Upload**: Process multiple PDF files simultaneously
+- 🔍 **Smart Validation**: Comprehensive file validation with detailed error reporting
+- 📊 **Processing Statistics**: Real-time document processing metrics
+- �️ **Incremental Building**: Add documents to existing knowledge base over time
+
+### AI-Powered Chat
+
+- 🧠 **Intelligent Q&A**: Natural language queries with context-aware responses
+- 💭 **Conversation Memory**: Persistent chat history across sessions
+- � **Export Conversations**: Download chat transcripts for future reference
+- 🎯 **Grounded Responses**: AI answers only based on uploaded document content
+
+### Vector Database Options
+
+- ⚡ **FAISS**: Lightning-fast similarity search, perfect for speed-critical applications
+- 🔥 **ChromaDB**: Advanced vector database with metadata support and filtering
+- 🔄 **Real-time Switching**: Toggle between databases without losing data
+- 💾 **Persistent Storage**: Both databases support long-term storage
 
 ## 🏗️ Architecture
 
@@ -24,7 +52,7 @@ This application enables users to upload PDF documents and ask questions about t
 - **AI Framework**: LangChain
 - **Language Model**: OpenAI GPT-3.5-turbo
 - **Embeddings**: OpenAI text-embedding-ada-002
-- **Vector Database**: FAISS
+- **Vector Databases**: FAISS + ChromaDB (with compatibility fixes)
 - **PDF Processing**: PyPDF
 - **Environment Management**: python-dotenv
 
@@ -99,13 +127,82 @@ OPENAI_EMBEDDING_MODEL=text-embedding-ada-002
 
 ### 5. Run the Application
 
+#### Option A: New Modular Application (Recommended)
+
+```bash
+streamlit run app.py
+```
+
+#### Option B: Direct Main Module
+
+```bash
+streamlit run main.py
+```
+
+#### Option C: Legacy Entry Point (Compatibility)
+
 ```bash
 streamlit run GenAI.Chatbot.AnsFromPDF.py
 ```
 
 The application will open in your default web browser at `http://localhost:8501`
 
-## 📖 Usage Guide
+### 6. Choose Your Database
+
+In the sidebar, select between:
+
+- **FAISS**: Fast, lightweight vector database (recommended for most users)
+- **ChromaDB**: Advanced vector database with enhanced features (for power users)
+
+## � Compatibility & Troubleshooting
+
+### Version Compatibility
+
+The application includes **automatic compatibility fixes** for different LangChain and FAISS versions:
+
+- **FAISS Compatibility**: Automatic fallback for `allow_dangerous_deserialization` parameter
+- **LangChain Versions**: Supports both older and newer LangChain versions
+- **Dependency Management**: Flexible requirements without strict version pinning
+
+### Common Issues & Solutions
+
+#### FAISS Loading Error
+
+**Error**: `FAISS.__init__() got an unexpected keyword argument 'allow_dangerous_deserialization'`
+
+**Solution**: The application now includes automatic compatibility handling. If you still experience issues:
+
+```bash
+pip install --upgrade langchain faiss-cpu
+```
+
+#### ChromaDB Installation Issues
+
+**Error**: ChromaDB installation failures
+
+**Solution**: Install ChromaDB dependencies:
+
+```bash
+pip install chromadb --upgrade
+```
+
+#### OpenAI API Errors
+
+**Error**: API key not found or invalid
+
+**Solution**:
+
+1. Ensure your `.env` file contains: `OPENAI_API_KEY=your_api_key_here`
+2. Verify your OpenAI API key is valid and has credits
+3. Check that the `.env` file is in the project root directory
+
+### Legacy Support
+
+- **Full Backward Compatibility**: v1.0 functionality preserved
+- **Multiple Entry Points**: Run via `app.py`, `main.py`, or legacy file
+- **Data Migration**: Existing FAISS databases work without changes
+
+## �📖 Usage Guide
 
 ### Authentication
 
@@ -213,7 +310,7 @@ ModuleNotFoundError: No module named 'streamlit'
 
 **Solution**: Activate your virtual environment and install dependencies:
 
-```bash
+```pwsh
 .\venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 ```
@@ -263,6 +360,14 @@ pandas==2.0.3              # Data manipulation
 - Vector embeddings are stored locally (if persistent storage is chosen)
 - No document content is sent to third parties except OpenAI for processing
 
+## 📚 Additional Documentation
+
+- **[Architecture Guide](ARCHITECTURE.md)**: Detailed system architecture and module descriptions
+- **[Features Documentation](FEATURES.md)**: Comprehensive feature overview and comparisons  
+- **[Migration Guide](MIGRATION.md)**: Upgrade instructions from v1.0 to v2.0
+- **[Troubleshooting Guide](TROUBLESHOOTING.md)**: Common issues and solutions
+- **[Changelog](CHANGELOG.md)**: Version history and release notes
+
 ## 🤝 Contributing
 
 1. Fork the repository
@@ -296,4 +401,4 @@ For issues, questions, or contributions:
 
 ---
 
-**Built using OpenAI, LangChain, and Streamlit**
+Note* - **Built using OpenAI, LangChain, and Streamlit**

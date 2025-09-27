@@ -4,8 +4,11 @@ streamlit
 # LangChain and AI/ML Libraries
 langchain
 openai
-faiss-cpu
 tiktoken
+
+# Vector Databases
+faiss-cpu
+chromadb
 
 # PDF Processing
 pypdf
@@ -13,6 +16,12 @@ pypdf
 # Environment Variables
 python-dotenv
 
-# Additional utilities (if needed)
+# Additional utilities
 numpy
 pandas
+
+# ChromaDB Dependencies
+pydantic
+
+# Optional: Enhanced features (uncomment if needed)
+# sentence-transformers>=2.2.0  # For advanced embeddings
