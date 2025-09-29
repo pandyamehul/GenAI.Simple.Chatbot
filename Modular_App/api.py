@@ -1,5 +1,22 @@
 """
-REST API interface for the GenAI PDF Chatbot.
+REST API in# JWT is optional - will use fallback if not available
+try:
+    import jwt
+    JWT_AVAILABLE = True
+except ImportError:
+    JWT_AVAILABLE = False
+
+# Add path management for proper imports
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+# Import our modular components with absolute imports
+from Modular_App.config import config_manager
+from Modular_App.document_processor import document_processor
+from Modular_App.vector_store import vector_store_manager
+from Modular_App.chat_engine import chat_engine
+from Modular_App.multi_model_provider import multi_model_managerhe GenAI PDF Chatbot.
 Provides endpoints for document upload, chat interactions, and system management.
 """
 from fastapi import FastAPI, File, UploadFile, HTTPException, Depends, status

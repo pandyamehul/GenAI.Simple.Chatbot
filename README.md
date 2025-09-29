@@ -14,7 +14,6 @@ A **revolutionary enterprise-grade** document intelligence platform that has evo
 - **🔐 Enterprise Security**: JWT authentication with 24-hour token expiry and secure API access
 - **🔌 Production REST API**: FastAPI server with comprehensive endpoints and interactive documentation
 - **� Dual Interface**: Simultaneous Web UI (Streamlit) and REST API access
-- 
 
 ### 🔒 Security & Authentication
 
@@ -216,25 +215,49 @@ ollama pull codellama
 
 ### 5. Run the Application
 
-#### Option A: New Modular Application (Recommended)
+#### 🚀 Option A: Using the Runner Script (Recommended)
 
 ```bash
+# Run the Streamlit Web UI
+python run_app.py
+
+# Or with streamlit directly
+streamlit run run_app.py
+```
+
+#### 🔧 Option B: Direct Module Execution
+
+```bash
+# From the project root directory
 streamlit run Modular_App/app.py
 ```
 
-#### Option B: Direct Main Module
+#### 📡 Option C: API Server Only
 
 ```bash
-streamlit run Modular_App/main.py
+# Run the FastAPI server
+python run_api.py
+
+# Or with uvicorn directly
+uvicorn Modular_App.api:app --reload --host 0.0.0.0 --port 8000
 ```
 
-#### Option C: Legacy Entry Point (Compatibility)
+#### 🔄 Option D: Both Interfaces Simultaneously
 
 ```bash
-streamlit run GenAI.Chatbot.AnsFromPDF.v1.py
+# Terminal 1: Start the Web UI
+python run_app.py
+
+# Terminal 2: Start the API server
+python run_api.py
 ```
 
-The application will open in your default web browser at `http://localhost:8501`
+> 💡 **Note**: The runner scripts (`run_app.py` and `run_api.py`) automatically handle Python path configuration and avoid import issues.
+
+**Access Points**:
+- **Web Interface**: `http://localhost:8501`
+- **API Server**: `http://localhost:8000`
+- **API Documentation**: `http://localhost:8000/docs`
 
 ### 6. Choose Your Database
 
@@ -245,15 +268,26 @@ In the sidebar, select between:
 
 ## 🔌 API Usage
 
-### Running the FastAPI Server
+### 🔌 Running the FastAPI Server
 
-Start both the web interface and API server:
+#### 🚀 Recommended Method (Using Runner Scripts)
 
 ```bash
-# Start the main application (includes both Web UI and API)
-streamlit run Modular_App/app.py
+# Start API server with proper path configuration
+python run_api.py
+```
 
-# Or start API server only
+#### 🔧 Alternative Methods
+
+```bash
+# Start both Web UI and API server in separate terminals
+# Terminal 1: Web Interface
+python run_app.py
+
+# Terminal 2: API Server
+python run_api.py
+
+# Or use uvicorn directly (if no import issues)
 uvicorn Modular_App.api:app --reload --host 0.0.0.0 --port 8000
 ```
 

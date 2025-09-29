@@ -11,17 +11,22 @@ Author: GenAI Team
 
 import streamlit as st
 from dotenv import load_dotenv
+import sys
+import os
 
 # Load environment variables
 load_dotenv()
 
-# Import custom modules
-from .config import config_manager
-from .auth import auth_manager
-from .document_processor import document_processor
-from .vector_store import vector_store_manager
-from .chat_engine import chat_engine, conversation_manager
-from .ui_components import ui_components
+# Add the parent directory to the Python path to allow absolute imports
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+# Import custom modules with absolute imports
+from Modular_App.config import config_manager
+from Modular_App.auth import auth_manager
+from Modular_App.document_processor import document_processor
+from Modular_App.vector_store import vector_store_manager
+from Modular_App.chat_engine import chat_engine, conversation_manager
+from Modular_App.ui_components import ui_components
 
 
 class GenAIChatbotApp:
