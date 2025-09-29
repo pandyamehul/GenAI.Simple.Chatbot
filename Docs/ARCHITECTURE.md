@@ -148,6 +148,29 @@ ui_components.show_processing_status(docs)
 
 ## 🔄 Application Flow
 
+## Gent AI Chatbot Architecture
+
+```mermaid
+graph TD
+    A[app.py] --> B[main()]
+    B --> C[Authenticate User]
+    B --> D[Upload PDFs]
+    D --> E[Load Documents]
+    E --> F[Split Text into Chunks]
+    F --> G[Generate Embeddings]
+    G --> H[Store in FAISS Vector DB]
+    H --> I[Initialize LangChain Components]
+    I --> J[ConversationBufferMemory]
+    I --> K[ChatOpenAI]
+    I --> L[Custom Prompt with System Message]
+    I --> M[ConversationalRetrievalChain]
+    M --> N[User Question Input]
+    N --> O[Retrieve Relevant Chunks]
+    O --> P[Generate Answer]
+    P --> Q[Display Answer in UI]
+    D --> E[Setup UI]
+```
+
 ### 1. **Initialization**
 
 ```mermaid

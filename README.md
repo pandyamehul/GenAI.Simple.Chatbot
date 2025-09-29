@@ -1,4 +1,4 @@
-# � GenAI Enterprise Document Intelligence v3.0 - Multi-Format, Multi-Language, Multi-Provider Platform
+# 📚 GenAI Enterprise Document Intelligence v3.0 - Multi-Format, Multi-Language, Multi-Provider Platform
 
 A **revolutionary enterprise-grade** document intelligence platform that has evolved from a simple PDF chatbot into a **comprehensive multi-format, multi-language, multi-AI provider system** with **secure REST API** and **JWT authentication**. Built with **FastAPI**, **Streamlit**, and **LangChain** for maximum scalability and security.
 
