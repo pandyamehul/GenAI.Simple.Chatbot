@@ -3,10 +3,10 @@ UI components module for Streamlit interface elements.
 """
 from typing import List, Optional, Tuple, Any
 import streamlit as st
-from config import config_manager
-from document_processor import document_processor
-from vector_store import vector_store_manager
-from chat_engine import conversation_manager
+from .config import config_manager
+from .document_processor import document_processor
+from .vector_store import vector_store_manager
+from .chat_engine import conversation_manager
 
 
 class UIComponents:

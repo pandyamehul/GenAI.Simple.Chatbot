@@ -16,12 +16,12 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Import custom modules
-from config import config_manager
-from auth import auth_manager
-from document_processor import document_processor
-from vector_store import vector_store_manager
-from chat_engine import chat_engine, conversation_manager
-from ui_components import ui_components
+from .config import config_manager
+from .auth import auth_manager
+from .document_processor import document_processor
+from .vector_store import vector_store_manager
+from .chat_engine import chat_engine, conversation_manager
+from .ui_components import ui_components
 
 
 class GenAIChatbotApp:

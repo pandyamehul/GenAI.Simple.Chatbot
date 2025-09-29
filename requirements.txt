@@ -1,27 +1,58 @@
 # Web Framework
-streamlit
+streamlit>=1.28.0
 
 # LangChain and AI/ML Libraries
-langchain
-openai
-tiktoken
+langchain>=0.0.350
+langchain-community
+openai>=1.0.0
+tiktoken>=0.5.0
 
 # Vector Databases
-faiss-cpu
-chromadb
+faiss-cpu>=1.7.4
+chromadb>=0.4.15
 
-# PDF Processing
-pypdf
+# Document Processing - Multi-Format Support
+pypdf>=3.0.0                    # PDF documents
+docx2txt>=0.8                   # Word documents (.docx)
+unstructured[local-inference]   # Excel (.xlsx) and PowerPoint (.pptx) 
+openpyxl>=3.1.0                 # Enhanced Excel support
+python-pptx>=0.6.21             # PowerPoint processing
 
 # Environment Variables
-python-dotenv
+python-dotenv>=1.0.0
 
 # Additional utilities
-numpy
-pandas
+numpy>=1.24.0
+pandas>=2.0.0
 
-# ChromaDB Dependencies
-pydantic
+# Core Dependencies
+pydantic>=1.10.0,<2.0.0
 
-# Optional: Enhanced features (uncomment if needed)
-# sentence-transformers>=2.2.0  # For advanced embeddings
+# Multi-Language Support
+langdetect>=1.0.9               # Language detection
+sentence-transformers>=2.2.0    # Multilingual embeddings
+translate>=3.6.1                # Translation support
+
+# Multi-Model Provider Support
+anthropic>=0.7.0                # Anthropic Claude models
+google-generativeai>=0.3.0      # Google Gemini models
+
+# REST API Framework
+fastapi>=0.104.0                # FastAPI framework
+uvicorn[standard]>=0.24.0       # ASGI server
+python-multipart>=0.0.6        # File upload support
+
+jwt
+
+# Optional: Local Model Support
+# ollama>=0.1.0                 # Uncomment for local model support
+
+# Development and Testing (optional)
+# pytest>=7.4.0               # Testing framework
+# httpx>=0.25.0               # HTTP client for API testing
+# black>=23.0.0               # Code formatting
+# flake8>=6.1.0               # Code linting
+
+# Production Deployment (optional)
+# gunicorn>=21.2.0            # Production WSGI server
+# redis>=5.0.0                # Caching and session management

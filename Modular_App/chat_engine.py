@@ -8,7 +8,7 @@ from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationBufferMemory
 from langchain.prompts import PromptTemplate
 
-from config import config_manager
+from .config import config_manager
 
 
 class ChatEngine:

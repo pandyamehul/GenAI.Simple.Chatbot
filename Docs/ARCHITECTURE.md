@@ -1,67 +1,61 @@
-# 🏗️ Architecture Documentation - GenAI PDF Chatbot v2.0
+# 🏗️ Architecture Documentation - GenAI Enterprise Document Intelligence v3.0
 
 ## 📋 Overview
 
-The GenAI PDF Chatbot has been completely refactored from a monolithic structure into a **modular, production-ready architecture** with **ChromaDB support** and **enhanced maintainability**. This document outlines the new architecture, design patterns, and module responsibilities.
+The GenAI Document Intelligence Platform has evolved from a simple PDF chatbot into a **comprehensive enterprise-grade document intelligence system** with **multi-format document processing**, **multi-AI provider support**, **multi-language capabilities**, and **REST API interface**. This document outlines the advanced architecture, design patterns, and system components.
 
 ## 🎯 Architecture Goals
 
-- **Modularity**: Clear separation of concerns with single-responsibility modules
-- **Maintainability**: Easy to understand, modify, and extend
-- **Scalability**: Support for multiple vector database backends
-- **Professional Quality**: Production-ready code with comprehensive error handling
-- **Type Safety**: Full type annotations and validation throughout
+- **Enterprise Scalability**: Multi-format, multi-language, multi-provider document processing
+- **Dual Interface Support**: Simultaneous Web UI (Streamlit) and REST API (FastAPI) access
+- **Provider Abstraction**: Unified interface for OpenAI, Anthropic, Google AI, and local models
+- **Language Intelligence**: Automatic language detection and multilingual document understanding
+- **Modularity**: Clear separation of concerns with enterprise-grade component architecture
+- **Production Ready**: Comprehensive error handling, authentication, and monitoring capabilities
+- **Type Safety**: Full type annotations and validation throughout all components
 
-## 📁 Project Structure
+## 📁 Enhanced Project Structure
 
 ```pwsh
 GenAI.Chatbot.FromPDF/
-├── � Modular_App/                 # 🧩 Modular Application Code
-│   ├── app.py                      # Main application launcher
-│   ├── main.py                     # Core application orchestration
-│   ├── config.py                   # Centralized configuration management
+├── 🧩 Modular_App/                     # 🧩 Enterprise Modular Application Layer
+│   ├── app.py                          # Main Streamlit application entry
+│   ├── main.py                         # Application orchestration & coordination
+│   ├── config.py                       # Multi-provider configuration system
 │
 ├── 🧩 Core Modules
-│   ├── auth.py                     # Authentication & authorization
-│   ├── document_processor.py       # PDF processing & text extraction
-│   ├── vector_store.py             # Vector database abstraction layer
-│   ├── chat_engine.py              # Conversational AI & memory management
-│   ├── ui_components.py            # Streamlit UI components
-│   └── GenAI.Chatbot.AnsFromPDF.v2.py  # Legacy v2 compatibility
+│   ├── auth.py                         # Authentication & authorization
+│   ├── document_processor.py           # Multi-format document processing engine
+│   ├── vector_store.py                 # Vector database abstraction layer
+│   ├── chat_engine.py                  # Enhanced chat & conversation management
+│   ├── ui_components.py                # Advanced Streamlit UI components
+│   ├── multi_model_provider.py         # Multi-AI provider abstraction system
+│   ├── api.py                          # FastAPI REST API server
+│   └── GenAI.Chatbot.AnsFromPDF.v2.py  # Legacy v2 compatibility - GenAI Enterprise Document Intelligence v3.0
 │
-├── 📂 Docs/                        # 📚 Documentation
-│   ├── ARCHITECTURE.md             # This file - architecture documentation
-│   ├── FEATURES.md                 # Feature documentation & comparisons
-│   ├── MIGRATION.md                # Migration guide from v1.0 to v2.0
-│   ├── TROUBLESHOOTING.md          # Troubleshooting guide
-│   └── CHANGELOG.md                # Version history & changes
+├── 📂 Docs/                            # Comprehensive Documentation Suite
+│   ├── ARCHITECTURE.md                 # This file - system architecture
+│   ├── FEATURES.md                     # Feature documentation & capabilities
+│   ├── MIGRATION.md                    # Migration guide v1→v2→v3
+│   ├── TROUBLESHOOTING.md              # Multi-format troubleshooting guide
+│   ├── API_GUIDE.md                    # Complete REST API documentation
+│   └── CHANGELOG.md                    # Version history & release notes
+├── README.md                           # User guide & setup instructions
 │
-├── GenAI.Chatbot.AnsFromPDF.v1.py # 🔄 Original v1.0 application
-├── README.md                       # User guide & setup instructions
+├── 🔄 Legacy Support
+│   └── GenAI.Chatbot.AnsFromPDF.py     # Original application
 │
-├── 📦 Dependencies & Configuration
-│   ├── requirements.txt            # Python dependencies (updated with ChromaDB)
-│   ├── .env                        # Environment variables (user-created)
-│   └── .gitignore                  # Git ignore rules
+├── 📋 Project Configuration
+│   ├── requirements.txt                # Enhanced Python dependencies (25+)
+│   ├── .env                            # Multi-provider environment variables (user-created)
+│   └── .gitignore                      # Git ignore rules
 │
 └── 💾 Data Storage (auto-created)
-    ├── vector_db/                  # FAISS database storage
-    └── chroma_db/                  # ChromaDB storage
+│   ├── vector_db/                      # FAISS database storage
+│   ├── chroma_db/                      # ChromaDB storage
+│   └── uploads/                        # Temporary document storage
+│   └── venv/                           # Virtual environment
 │
-├── ⚙️ Configuration & Setup
-│   ├── requirements.txt            # Python dependencies (updated)
-│   ├── .env                        # Environment variables
-│   ├── .gitignore                  # Git ignore rules
-│   └── README.md                   # Project documentation
-│
-├── 🗄️ Data Storage (auto-created)
-│   ├── vector_db/                  # FAISS database storage
-│   ├── chroma_db/                  # ChromaDB storage
-│   └── venv/                       # Virtual environment
-│
-└── 📚 Documentation
-    ├── ARCHITECTURE.md             # This file
-    └── API_REFERENCE.md            # API documentation (if needed)
 ```
 
 ## 🎯 Key Improvements
@@ -164,31 +158,73 @@ graph TD
     D --> E[Setup UI]
 ```
 
-### 2. **Authentication**
+### 2. **Authentication & Security Flow**
 
 ```mermaid
 graph TD
-    A[User Access] --> B[auth_manager.require_authentication()]
-    B --> C{Valid Credentials?}
-    C -->|Yes| D[Continue to App]
-    C -->|No| E[Show Login Form]
+    A[Client Request] --> B{Authentication Required?}
+    B -->|No| C[Public Endpoints: /health, /docs]
+    B -->|Yes| D[Check Authorization Header]
+    D --> E{Valid Bearer Token?}
+    E -->|No| F[Return 401 Unauthorized]
+    E -->|Yes| G[Verify JWT Token]
+    G --> H{JWT Available?}
+    H -->|Yes| I[Validate JWT Signature]
+    H -->|No| J[Simple Token Fallback]
+    I --> K{Token Valid?}
+    K -->|Yes| L[Extract User Info]
+    K -->|No| F
+    J --> M{Matches API_TOKEN?}
+    M -->|Yes| N[Set User as Admin]
+    M -->|No| F
+    L --> O[Process Protected Request]
+    N --> O
+    O --> P[Return Response]
+    
+    style F fill:#ffcccc
+    style O fill:#ccffcc
+    style P fill:#ccffcc
 ```
 
-### 3. **Document Processing**
+### 3. **JWT Authentication Lifecycle**
 
 ```mermaid
 graph TD
-    A[Upload Files] --> B[document_processor.validate_files()]
-    B --> C[document_processor.load_documents()]
-    C --> D[document_processor.split_documents()]
+    A[POST /auth/token] --> B[Validate Credentials]
+    B --> C{Valid User?}
+    C -->|No| D[Return 401: Invalid Credentials]
+    C -->|Yes| E[Generate JWT Token]
+    E --> F[Set 24-hour Expiry]
+    F --> G[Sign with HS256]
+    G --> H[Return Token Response]
+    H --> I[Client Stores Token]
+    I --> J[Include in Authorization Header]
+    J --> K[Bearer token validation]
+    K --> L{Token Expired?}
+    L -->|Yes| M[Return 401: Token Expired]
+    L -->|No| N[Allow Access]
+    
+    style D fill:#ffcccc
+    style M fill:#ffcccc
+    style H fill:#ccffcc
+    style N fill:#ccffcc
+```
+
+### 4. **Document Processing**
+
+```mermaid
+graph TD
+    A[Upload Files] --> B[Validate Files]
+    B --> C[Load Documents]
+    C --> D[Split Documents]
     D --> E[Vector Database]
 ```
 
-### 4. **Vector Database Management**
+### 5. **Vector Database Management**
 
 ```mermaid
 graph TD
-    A[Select DB Type] --> B[vector_store_manager.set_database_type()]
+    A[Select DB Type] --> B[Set Database Type]
     B --> C{Existing DB?}
     C -->|Yes| D[Load Existing]
     C -->|No| E[Create New]
@@ -197,15 +233,15 @@ graph TD
     F --> G
 ```
 
-### 5. **Chat Interaction**
+### 6. **Chat Interaction**
 
 ```mermaid
 graph TD
-    A[User Question] --> B[chat_engine.get_response()]
+    A[User Question] --> B[Get Response]
     B --> C[Vector Similarity Search]
     C --> D[LLM Processing]
     D --> E[Generate Response]
-    E --> F[conversation_manager.add_message()]
+    E --> F[Add Message to History]
 ```
 
 ## 🚀 Running the Application

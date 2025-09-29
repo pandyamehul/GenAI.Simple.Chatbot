@@ -213,8 +213,11 @@ def main():
                 Answer:"""
         )
 
+        # Create QA chain, with custom prompt, memory, and retriever
         qa_chain = ConversationalRetrievalChain.from_llm(
-            llm=ChatOpenAI(openai_api_key=openai_api_key, model_name=os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")),
+            llm=ChatOpenAI(
+                openai_api_key=openai_api_key, 
+                model_name=os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")),
             retriever=db.as_retriever(),
             memory=memory,
             combine_docs_chain_kwargs={"prompt": custom_prompt}

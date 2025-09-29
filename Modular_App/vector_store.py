@@ -11,7 +11,7 @@ from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import FAISS, Chroma
 from langchain.schema import Document
 
-from config import config_manager
+from .config import config_manager
 
 
 class VectorStoreInterface(ABC):

@@ -1,19 +1,38 @@
 """
-Document processing module for PDF handling and text extraction.
+Document processing module for multi-format document handling and text extraction.
+Supports PDF, Word (DOCX), Excel (XLSX), PowerPoint (PPTX), and Text files.
 """
 import tempfile
 import os
-from typing import List, Optional
+from typing import List, Optional, Dict, Any
 import streamlit as st
-from langchain.document_loaders import PyPDFLoader
+from pathlib import Path
+
+# Document loaders for different formats
+from langchain.document_loaders import (
+    PyPDFLoader,
+    Docx2txtLoader, 
+    UnstructuredExcelLoader,
+    UnstructuredPowerPointLoader,
+    TextLoader
+)
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.schema import Document
 
-from config import config_manager
+from .config import config_manager
 
 
 class DocumentProcessor:
-    """Handles PDF document loading, processing, and text splitting."""
+    """Handles multi-format document loading, processing, and text splitting."""
+    
+    # Supported file formats and their corresponding loaders
+    SUPPORTED_FORMATS = {
+        '.pdf': {'loader': PyPDFLoader, 'description': 'PDF documents'},
+        '.docx': {'loader': Docx2txtLoader, 'description': 'Word documents'},
+        '.xlsx': {'loader': UnstructuredExcelLoader, 'description': 'Excel spreadsheets'},
+        '.pptx': {'loader': UnstructuredPowerPointLoader, 'description': 'PowerPoint presentations'},
+        '.txt': {'loader': TextLoader, 'description': 'Text files'},
+    }
     
     def __init__(self):
         self.config = config_manager.app_config
@@ -53,28 +72,46 @@ class DocumentProcessor:
     
     def _process_single_file(self, uploaded_file) -> List[Document]:
         """
-        Process a single PDF file.
+        Process a single document file (PDF, DOCX, XLSX, PPTX, or TXT).
         
         Args:
             uploaded_file: Streamlit uploaded file object
             
         Returns:
-            List[Document]: Extracted documents from the PDF
+            List[Document]: Extracted documents from the file
         """
-        # Create temporary file
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
+        # Get file extension
+        file_extension = Path(uploaded_file.name).suffix.lower()
+        
+        # Validate file format
+        if file_extension not in self.SUPPORTED_FORMATS:
+            raise ValueError(f"Unsupported file format: {file_extension}. Supported formats: {', '.join(self.SUPPORTED_FORMATS.keys())}")
+        
+        # Create temporary file with appropriate suffix
+        with tempfile.NamedTemporaryFile(delete=False, suffix=file_extension) as tmp_file:
             tmp_file.write(uploaded_file.read())
             tmp_file_path = tmp_file.name
         
         try:
-            # Load PDF content
-            loader = PyPDFLoader(tmp_file_path)
+            # Get appropriate loader for the file type
+            loader_class = self.SUPPORTED_FORMATS[file_extension]['loader']
+            
+            # Handle different loader initialization patterns
+            if file_extension == '.txt':
+                # TextLoader needs encoding parameter for better compatibility
+                loader = loader_class(tmp_file_path, encoding='utf-8')
+            else:
+                loader = loader_class(tmp_file_path)
+            
+            # Load document content
             docs = loader.load()
             
-            # Add metadata
+            # Add enhanced metadata
             for doc in docs:
                 doc.metadata.update({
                     "source_file": uploaded_file.name,
+                    "file_type": file_extension,
+                    "file_description": self.SUPPORTED_FORMATS[file_extension]['description'],
                     "file_size": len(uploaded_file.getvalue()),
                     "processed_at": str(st.session_state.get('processing_time', 'unknown'))
                 })
@@ -143,9 +180,48 @@ class DocumentProcessor:
             "sources": sources
         }
     
+    @classmethod
+    def get_supported_formats(cls) -> Dict[str, str]:
+        """
+        Get dictionary of supported file formats and their descriptions.
+        
+        Returns:
+            Dict[str, str]: Format extensions mapped to descriptions
+        """
+        return {ext: info['description'] for ext, info in cls.SUPPORTED_FORMATS.items()}
+    
+    @classmethod
+    def is_supported_format(cls, filename: str) -> bool:
+        """
+        Check if a file format is supported.
+        
+        Args:
+            filename (str): Name of the file to check
+            
+        Returns:
+            bool: True if format is supported
+        """
+        file_extension = Path(filename).suffix.lower()
+        return file_extension in cls.SUPPORTED_FORMATS
+    
+    def get_format_description(self, filename: str) -> str:
+        """
+        Get description for a file format.
+        
+        Args:
+            filename (str): Name of the file
+            
+        Returns:
+            str: Description of the file format
+        """
+        file_extension = Path(filename).suffix.lower()
+        if file_extension in self.SUPPORTED_FORMATS:
+            return self.SUPPORTED_FORMATS[file_extension]['description']
+        return f"Unsupported format: {file_extension}"
+
     def validate_file(self, uploaded_file) -> tuple[bool, str]:
         """
-        Validate uploaded file.
+        Validate uploaded file for format and size constraints.
         
         Args:
             uploaded_file: Streamlit uploaded file object
@@ -153,9 +229,10 @@ class DocumentProcessor:
         Returns:
             tuple[bool, str]: (is_valid, error_message)
         """
-        # Check file type
-        if uploaded_file.type != "application/pdf":
-            return False, "Only PDF files are supported"
+        # Check file format
+        if not self.is_supported_format(uploaded_file.name):
+            supported = ', '.join(self.SUPPORTED_FORMATS.keys())
+            return False, f"Unsupported format. Supported formats: {supported}"
         
         # Check file size (convert MB to bytes)
         max_size_bytes = self.config.MAX_FILE_SIZE_MB * 1024 * 1024
