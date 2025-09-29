@@ -154,7 +154,7 @@ ui_components.show_processing_status(docs)
 graph TD
     A[app.py] --> B[main]
     B --> C[Authenticate User]
-    B --> D[Upload PDFs]
+    C --> D[Upload PDFs]
     D --> E[Load Documents]
     E --> F[Split Text into Chunks]
     F --> G[Generate Embeddings]
