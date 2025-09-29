@@ -152,7 +152,7 @@ ui_components.show_processing_status(docs)
 
 ```mermaid
 graph TD
-    A[app.py] --> B[main()]
+    A[app.py] --> B[main]
     B --> C[Authenticate User]
     B --> D[Upload PDFs]
     D --> E[Load Documents]
