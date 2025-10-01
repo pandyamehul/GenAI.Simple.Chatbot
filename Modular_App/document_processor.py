@@ -106,10 +106,11 @@ class DocumentProcessor:
             # Load document content
             docs = loader.load()
             
-            # Add enhanced metadata
+            # Add enhanced metadata (always store original file name as 'original_file_name')
             for doc in docs:
                 doc.metadata.update({
                     "source_file": uploaded_file.name,
+                    "original_file_name": uploaded_file.name,
                     "file_type": file_extension,
                     "file_description": self.SUPPORTED_FORMATS[file_extension]['description'],
                     "file_size": len(uploaded_file.getvalue()),
@@ -125,29 +126,29 @@ class DocumentProcessor:
     
     def split_documents(self, documents: List[Document]) -> List[Document]:
         """
-        Split documents into smaller chunks for better processing.
-        
+        Split documents into smaller chunks for better processing, and force all chunks to use the original uploaded file name for all relevant metadata fields.
         Args:
             documents (List[Document]): List of documents to split
-            
         Returns:
             List[Document]: List of split document chunks
         """
         if not documents:
             return []
-        
         try:
             split_docs = self.text_splitter.split_documents(documents)
-            
-            # Add chunk metadata
             for i, doc in enumerate(split_docs):
+                # Find the original file name from the parent doc (if present)
+                original_file_name = doc.metadata.get('original_file_name') or doc.metadata.get('source_file') or doc.metadata.get('source') or doc.metadata.get('document_name')
+                # Overwrite all relevant fields to ensure temp file name is never used
                 doc.metadata.update({
                     "chunk_id": i,
-                    "total_chunks": len(split_docs)
+                    "total_chunks": len(split_docs),
+                    "source": original_file_name,
+                    "source_file": original_file_name,
+                    "document_name": original_file_name,
+                    "original_file_name": original_file_name
                 })
-            
             return split_docs
-            
         except Exception as e:
             st.error(f"Error splitting documents: {str(e)}")
             return documents

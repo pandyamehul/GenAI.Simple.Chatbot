@@ -2,7 +2,7 @@
 Authentication module for the GenAI Chatbot application.
 """
 import streamlit as st
-from config import config_manager
+from .config import config_manager
 
 
 class AuthManager:
@@ -84,6 +84,18 @@ class AuthManager:
         """
         return getattr(st.session_state, 'authenticated', False)
     
+    def get_current_user_id(self) -> str:
+        """Get current user ID."""
+        if self.is_authenticated():
+            return getattr(st.session_state, 'current_user_id', self.config.DEFAULT_USERNAME)
+        return ""
+    
+    def get_current_username(self) -> str:
+        """Get current username."""
+        if self.is_authenticated():
+            return getattr(st.session_state, 'current_username', self.config.DEFAULT_USERNAME)
+        return ""
+    
     def require_authentication(self) -> bool:
         """
         Require authentication and handle login flow.
@@ -98,6 +110,8 @@ class AuthManager:
         
         # Store authentication state
         st.session_state.authenticated = True
+        st.session_state.current_user_id = self.config.DEFAULT_USERNAME
+        st.session_state.current_username = self.config.DEFAULT_USERNAME
         return True
 
 

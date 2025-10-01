@@ -15,13 +15,7 @@ class UIComponents:
     @staticmethod
     def show_app_header() -> None:
         """Display application header and title."""
-        st.set_page_config(
-            page_title="Gen AI PDF Chatbot",
-            page_icon="📚",
-            layout="wide",
-            initial_sidebar_state="expanded"
-        )
-        
+        # Do not call st.set_page_config here; it must only be called once and as the first Streamlit command in the entrypoint.
         st.title(config_manager.app_config.APP_TITLE)
         st.caption(f"Version {config_manager.app_config.APP_VERSION}")
     

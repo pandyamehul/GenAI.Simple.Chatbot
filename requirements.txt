@@ -43,6 +43,7 @@ uvicorn[standard]>=0.24.0       # ASGI server
 python-multipart>=0.0.6        # File upload support
 
 jwt
+asyncio
 
 # Optional: Local Model Support
 # ollama>=0.1.0                 # Uncomment for local model support

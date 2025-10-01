@@ -364,18 +364,271 @@ with st.spinner("Processing..."):
 - ✅ **Extensible**: Plugin-like architecture
 - ✅ **Upgradeable**: Independent module updates
 
-## 🔮 Future Enhancements
+## 🔮 Future Enhancement Architecture
 
-The modular architecture makes it easy to add:
+The modular architecture makes it easy to add advanced features:
 
-- 📊 Analytics and monitoring dashboard
-- 🔌 Plugin system for custom processors
-- 🌐 Multi-language support
-- 🔄 Batch processing capabilities
-- 📱 Mobile-responsive design
-- 🔒 Advanced security features
-- 📈 Performance optimization tools
+### � Document Source Attribution Architecture
+
+#### **Core Components**
+
+```python
+class SourceAttributionManager:
+    """Manages document source tracking and attribution."""
+    
+    def track_document_source(self, doc_id: str, chunk_id: str, 
+                            page_num: int, section: str) -> SourceMetadata
+    
+    def generate_citations(self, response: str, 
+                         sources: List[SourceMetadata]) -> AttributedResponse
+    
+    def create_source_links(self, doc_path: str, 
+                          page: int, coordinates: Tuple) -> DocumentLink
+```
+
+#### **Attribution Flow Diagram**
+
+```mermaid
+graph TD
+    A[User Query] --> B[Vector Search]
+    B --> C[Retrieve Chunks with Metadata]
+    C --> D[Generate LLM Response]
+    D --> E[Extract Source References]
+    E --> F[Create Citation Links]
+    F --> G[Generate Confidence Scores]
+    G --> H[Format Response with Sources]
+    H --> I[Display with Clickable Citations]
+    
+    C --> J[Track Chunk Sources]
+    J --> K[Document Metadata]
+    K --> L[Page/Section Info]
+    L --> M[Original Text Location]
+    
+    style I fill:#ccffcc
+    style M fill:#ffeecc
+```
+
+#### **Data Models**
+
+```python
+@dataclass
+class SourceMetadata:
+    document_id: str
+    document_name: str
+    page_number: Optional[int]
+    section_title: Optional[str]
+    chunk_text: str
+    confidence_score: float
+    coordinates: Optional[Tuple[float, float, float, float]]
+    timestamp: datetime
+
+@dataclass
+class AttributedResponse:
+    response_text: str
+    sources: List[SourceMetadata]
+    citations: List[Citation]
+    attribution_confidence: float
+
+@dataclass
+class Citation:
+    text_snippet: str
+    source_reference: str
+    citation_format: str  # APA, MLA, Chicago, IEEE
+    clickable_link: str
+```
+
+### 🤝 Real-time Collaborative Features Architecture
+
+#### **Core Infrastructure**
+
+```python
+class CollaborationManager:
+    """Manages real-time collaborative features."""
+    
+    def create_workspace(self, owner_id: str, name: str) -> Workspace
+    def join_workspace(self, user_id: str, workspace_id: str) -> Session
+    def broadcast_event(self, workspace_id: str, event: CollabEvent)
+    def handle_concurrent_access(self, resource_id: str, action: Action)
+
+class RealTimeEngine:
+    """WebSocket-based real-time communication."""
+    
+    def establish_connection(self, user_id: str, workspace_id: str)
+    def sync_user_presence(self, workspace_id: str, user_list: List[User])
+    def broadcast_chat_message(self, message: ChatMessage)
+    def notify_document_changes(self, doc_event: DocumentEvent)
+```
+
+#### **Collaborative Architecture Diagram**
+
+```mermaid
+graph TD
+    A[User A Browser] --> B[WebSocket Server]
+    C[User B Browser] --> B
+    D[User C Browser] --> B
+    
+    B --> E[Collaboration Manager]
+    E --> F[Workspace State Manager]
+    E --> G[Event Broadcasting Service]
+    E --> H[Conflict Resolution Engine]
+    
+    F --> I[Shared Document Store]
+    F --> J[User Presence Manager]
+    F --> K[Permission Manager]
+    
+    G --> L[Real-time Chat Sync]
+    G --> M[Document Upload Notifications]
+    G --> N[User Activity Feed]
+    
+    H --> O[Document Version Control]
+    H --> P[Concurrent Edit Resolution]
+    H --> Q[State Synchronization]
+    
+    style B fill:#ccffff
+    style E fill:#ffccff
+    style I fill:#ffffcc
+```
+
+#### **Real-time Data Models**
+
+```python
+@dataclass
+class Workspace:
+    id: str
+    name: str
+    owner_id: str
+    members: List[WorkspaceMember]
+    documents: List[Document]
+    chat_sessions: List[ChatSession]
+    created_at: datetime
+    settings: WorkspaceSettings
+
+@dataclass
+class CollabEvent:
+    event_type: str  # 'chat_message', 'document_upload', 'user_join'
+    workspace_id: str
+    user_id: str
+    timestamp: datetime
+    data: Dict[str, Any]
+
+@dataclass
+class UserPresence:
+    user_id: str
+    workspace_id: str
+    status: str  # 'active', 'idle', 'away'
+    last_seen: datetime
+    current_activity: Optional[str]
+```
+
+#### **WebSocket Event Handling**
+
+```python
+class WebSocketHandler:
+    """Handles real-time WebSocket connections."""
+    
+    async def handle_user_join(self, user_id: str, workspace_id: str):
+        """Handle user joining workspace."""
+        await self.broadcast_user_presence(workspace_id, user_id, 'joined')
+        await self.send_workspace_state(user_id, workspace_id)
+    
+    async def handle_chat_message(self, message: ChatMessage):
+        """Broadcast chat message to all workspace members."""
+        await self.broadcast_to_workspace(message.workspace_id, {
+            'type': 'chat_message',
+            'data': message.to_dict()
+        })
+    
+    async def handle_document_upload(self, upload_event: DocumentUploadEvent):
+        """Notify all users of new document upload."""
+        await self.broadcast_to_workspace(upload_event.workspace_id, {
+            'type': 'document_uploaded',
+            'data': upload_event.to_dict()
+        })
+```
+
+### 🔄 Integration Architecture
+
+#### **Source Attribution Integration Points**
+
+```mermaid
+graph LR
+    A[Existing Chat Engine] --> B[Enhanced Response Generator]
+    B --> C[Source Attribution Layer]
+    C --> D[Citation Formatter]
+    
+    E[Vector Store] --> F[Enhanced Chunk Metadata]
+    F --> C
+    
+    G[Document Processor] --> H[Source Tracking Module]
+    H --> F
+    
+    style C fill:#ffcccc
+    style D fill:#ccffcc
+```
+
+#### **Collaborative Features Integration**
+
+```mermaid
+graph LR
+    A[Existing API Endpoints] --> B[WebSocket Layer]
+    B --> C[Collaboration Manager]
+    C --> D[Shared State Manager]
+    
+    E[Chat Engine] --> F[Multi-User Chat Handler]
+    F --> C
+    
+    G[Document Processor] --> H[Collaborative Upload Handler]
+    H --> C
+    
+    style C fill:#ffccff
+    style B fill:#ccffff
+```
+
+### 📊 Advanced Analytics & Monitoring
+
+#### **Analytics Architecture**
+
+```python
+class AnalyticsManager:
+    """Comprehensive usage analytics and monitoring."""
+    
+    def track_user_activity(self, user_id: str, action: str, context: Dict)
+    def monitor_system_performance(self) -> SystemMetrics
+    def generate_usage_reports(self, workspace_id: str) -> UsageReport
+    def track_ai_provider_costs(self, provider: str, usage: Usage) -> CostMetrics
+
+@dataclass
+class UsageReport:
+    workspace_id: str
+    period: DateRange
+    user_activity: Dict[str, UserActivityMetrics]
+    document_stats: DocumentUsageStats
+    chat_analytics: ChatAnalytics
+    cost_breakdown: CostBreakdown
+```
+
+### 🚀 Implementation Roadmap
+
+1. **Phase 1**: Document Source Attribution
+   - Enhance vector store with detailed metadata tracking
+   - Implement citation generation system
+   - Add source linking capabilities
+
+2. **Phase 2**: Basic Collaboration
+   - WebSocket infrastructure setup
+   - User presence management
+   - Shared workspace creation
+
+3. **Phase 3**: Advanced Collaboration
+   - Real-time chat synchronization
+   - Collaborative document management
+   - Conflict resolution implementation
+
+4. **Phase 4**: Analytics & Optimization
+   - Usage analytics dashboard
+   - Performance monitoring
+   - Cost optimization features
 
 ---
 
-**This modular architecture transforms the GenAI PDF Chatbot from a monolithic script into a professional, production-ready application that's easy to understand, extend, and maintain!**
+**This enhanced architecture provides a clear roadmap for implementing advanced features while maintaining the modular, scalable design principles!**

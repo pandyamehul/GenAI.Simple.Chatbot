@@ -215,11 +215,13 @@ class VectorStoreManager:
         if not self.current_store.exists(path):
             return None
         
+        import traceback
         try:
             embeddings = self.get_embeddings()
             return self.current_store.load_local(path, embeddings)
         except Exception as e:
-            st.error(f"Error loading {self.current_db_type.upper()} database: {str(e)}")
+            tb = traceback.format_exc()
+            st.error(f"Error loading {self.current_db_type.upper()} database: {str(e)}\nTraceback:\n{tb}")
             return None
     
     def save_database(self, db: Any) -> None:
