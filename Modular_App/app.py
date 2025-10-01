@@ -23,7 +23,7 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Use absolute import instead of relative import
-from Modular_App.main import main
+from main import main
 
 if __name__ == "__main__":
     main()

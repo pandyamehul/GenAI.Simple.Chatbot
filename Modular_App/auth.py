@@ -2,7 +2,7 @@
 Authentication module for the GenAI Chatbot application.
 """
 import streamlit as st
-from config import config_manager
+from Modular_App.config import config_manager
 
 
 class AuthManager:

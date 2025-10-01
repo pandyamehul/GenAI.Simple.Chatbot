@@ -12,7 +12,7 @@ class AppConfig:
     
     # App metadata
     APP_TITLE: str = "📚 Gen AI Chatbot with PDF Knowledge Base"
-    APP_VERSION: str = "2.0.0"
+    APP_VERSION: str = "2.1.0"
     
     # Authentication
     DEFAULT_USERNAME: str = "admin"
